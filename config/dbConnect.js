@@ -5,7 +5,7 @@ const dbConnect =  async () => {
     {
         const connected = mongoose.connect(process.env.MONGO_URL);
         mongoose.set("strictQuery",true);
-        console.log(`Mongodb connected ${(await connected).connection.host} `);
+        console.log(`Mongodb connected ${connected.connection.host} `);
     }
 
     catch(error){
@@ -18,5 +18,5 @@ export default dbConnect;
 
 //RBgMwMWlAQeLvFPc
 
-//SrpoA8vQLlvEFNYN
+//SrpoA8vQLlvEFNYN main
 

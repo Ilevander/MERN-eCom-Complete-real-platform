@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
 
-const UserShema = new Schema ({
-    fullname :{
+const { Schema } = mongoose;
+
+const UserSchema = new Schema({
+    fullname: {
         type: String,
         required: true,
     },
@@ -14,59 +15,50 @@ const UserShema = new Schema ({
         type: String,
         required: true,
     },
-    orders: 
-    [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Order",
-         },
-    ],
-        wishLists:
-        [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "WishList",
-             },
-        ],
-        isAdmin: {
-            type: Boolean,
-            default: false,
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+    }],
+    wishLists: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "WishList",
+    }],
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    hasShippingAddress: {
+        type: Boolean,
+        default: false,
+    },
+    shippingAddress: {
+        firstName: {
+            type: String,
         },
-        hasShippingAddress: {
-            type: Boolean,
-            default: false,
+        lastName: {
+            type: String,
         },
-        shippingAddress: {
-            
-                firstName:{
-                    type: String,
-                },
-                lastName:{
-                    type:String,
-                },
-                city:{
-                    type: String,
-                },
-                postalCode:{
-                    type:String,
-                },
-                province:{
-                    type:String,
-                },
-                country:{
-                    type:String,
-                },
-                phone: {
-                    type: String,
-                },
-            },
+        city: {
+            type: String,
         },
-        {
-            timestamps: true,
-        }
+        postalCode: {
+            type: String,
+        },
+        province: {
+            type: String,
+        },
+        country: {
+            type: String,
+        },
+        phone: {
+            type: String,
+        },
+    }
+}, {
+    timestamps: true,
+});
 
-);
+// Compile the schema to model:
+const User = mongoose.model("User", UserSchema);
 
-//Compile the schema to model:
-const User = mongoose.model("User",UserShema);
-export default User;    
+export default User;
