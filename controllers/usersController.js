@@ -35,3 +35,28 @@ export const registerUserController = async (req, res) => {
         data: user,
     });
 };
+
+//@desc : Login user
+//@route POST /api/v1/users/login
+//@access Public
+
+
+export const loginUserController = async (req,res) => {
+    const {email,password} = req.body;
+    //Find the user in db by email only
+    const userFound = await User.findOne({
+        email,
+    });
+    if(userFound && await bcrypt.compare(password,userFound?.password)){
+        res.json({
+            status:'Login Success',
+            message: 'User Logged in successfully',
+            userFound,
+        });
+    }else{
+        res.json({
+            msg:'Invalid Login ',
+        });
+    }
+    
+};
