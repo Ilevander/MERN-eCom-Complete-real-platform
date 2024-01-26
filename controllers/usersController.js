@@ -2,6 +2,7 @@
 import User from "../model/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
+import generateToken from "../utils/generateToken.js";
 
 // @desc: Register user
 // @route: POST /api/v1/users/register
@@ -51,6 +52,7 @@ export const loginUserController = asyncHandler(async (req,res) => {
             status:'Login Success',
             message: 'User Logged in successfully',
             userFound,
+            token: generateToken(userFound?._id)
         });
     }else{
         throw new Error('Invalid Login Credentials');
