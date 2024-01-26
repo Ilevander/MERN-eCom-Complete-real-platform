@@ -59,3 +59,13 @@ export const loginUserController = asyncHandler(async (req,res) => {
     }
     
 })
+
+// @desc  GET user profile
+// @route GET /api/v1/users/profile
+// @access Private
+
+export const getUserProfileController = asyncHandler(async (req,res) => {
+    res.json({
+        msg: "Welcome Profile page",
+    })
+})
