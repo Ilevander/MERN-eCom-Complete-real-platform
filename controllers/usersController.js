@@ -4,6 +4,7 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
 import { getTokenFromHeader } from "../utils/getTokenFromHeader.js";
+import { verifyToken } from "../utils/verifyToken.js";
 
 
 // @desc: Register user
@@ -69,8 +70,10 @@ export const loginUserController = asyncHandler(async (req,res) => {
 export const getUserProfileController = asyncHandler(async (req,res) => {
     //Take token from header
     const token = getTokenFromHeader(req);
-    console.log(token);
-    console.log(req.headers);
+    //verify Token
+    const verified = verifyToken(token);
+    console.log(verified);
+    // console.log(req.headers);
     res.json({
         msg: "Welcome Profile page",
     });
