@@ -3,6 +3,8 @@ import User from "../model/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import { getTokenFromHeader } from "../utils/getTokenFromHeader.js";
+
 
 // @desc: Register user
 // @route: POST /api/v1/users/register
@@ -65,7 +67,13 @@ export const loginUserController = asyncHandler(async (req,res) => {
 // @access Private
 
 export const getUserProfileController = asyncHandler(async (req,res) => {
+    //Take token from header
+    const token = getTokenFromHeader(req);
+    console.log(token);
+    console.log(req.headers);
     res.json({
         msg: "Welcome Profile page",
-    })
-})
+    });
+});
+
+ 
