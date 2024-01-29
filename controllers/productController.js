@@ -93,7 +93,19 @@ export const getProductsController = asyncHandler(async(req,res) => {
         });
     }
 
+    //pagination
+    //page
+    const page = parseInt(req.query.page) ?  parseInt(req.query.page) : 1;
+    //limit
+    const limit = parseInt(req.query.limit) ?  parseInt(req.query.limit) : 10;
+    //startIdx
+    const startIndex = (page -1) * limit;
+    //endIdx
+    const endIdx = page * limit;
+    //total
+    const total = await Product.countDocuments();
 
+    productQuery = productQuery.skip(startIndex).limit(limit);
     //await the query:
     const products = await productQuery;
 
