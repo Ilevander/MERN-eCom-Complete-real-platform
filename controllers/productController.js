@@ -56,36 +56,47 @@ export const getProductsController = asyncHandler(async(req,res) => {
         });
     }
 
-    //search by brand
+    //filter by brand
     if(req.query.brand){
         productQuery = productQuery.find({
             brand: { $regex : req.query.brand, $options : "i"},
         });
     }
 
-    //search by category
+    //filter by category
     if(req.query.category){
         productQuery = productQuery.find({
             category: { $regex : req.query.category, $options : "i"},
         });
     }
 
-    //search by color
+    //filter by color
     if(req.query.colors){
         productQuery = productQuery.find({
             colors: { $regex : req.query.colors, $options : "i"},
         });
     }
 
-    //search by size
+    //filter by size
     if(req.query.sizes){
         productQuery = productQuery.find({
             sizes: { $regex : req.query.sizes, $options : "i"},
         });
     }
+    //filter by price range 
+    if(req.query.price){
+        const priceRange = req.query.price.split("-");
+        //gte : greater or equal
+        //lte : less than or equal to
+        productQuery = productQuery.find({
+            price:{$gte: priceRange[0], $lte: priceRange[1]},
+        });
+    }
+
 
     //await the query:
     const products = await productQuery;
+
     res.json({
         status: "success",
         products,
