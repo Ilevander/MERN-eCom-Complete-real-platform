@@ -101,16 +101,36 @@ export const getProductsController = asyncHandler(async(req,res) => {
     //startIdx
     const startIndex = (page -1) * limit;
     //endIdx
-    const endIdx = page * limit;
+    const endIndex = page * limit;
     //total
     const total = await Product.countDocuments();
 
     productQuery = productQuery.skip(startIndex).limit(limit);
+    
+    //pagination results
+    const pagination = {}
+    if(endIndex < total){
+        pagination.next = {
+            page: page + 1,
+            limit,
+        };
+    }
+
+    if(startIndex > 0 ){
+        pagination.prev = {
+            page : page - 1,
+            limit,
+        };
+    }
     //await the query:
     const products = await productQuery;
 
     res.json({
         status: "success",
+        total,
+        results: products.length,
+        pagination,
+        message: "Products fetched successfully" , 
         products,
     });
 });
