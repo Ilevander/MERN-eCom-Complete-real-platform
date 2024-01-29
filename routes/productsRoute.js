@@ -1,5 +1,5 @@
 import  express  from "express";
-import { createProductController, getProductsController } from "../controllers/productController";
+import { createProductController, getProductController, getProductsController , getProductController } from "../controllers/productController";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 
 
@@ -7,7 +7,8 @@ import { isLoggedIn } from "../middlewares/isLoggedIn";
 const productsRouter = express.Router();
 
 userRoutes.post("/" , isLoggedIn , createProductController);
-userRoutes.get("/" , isLoggedIn , getProductsController);
+userRoutes.get("/" , getProductsController);
+userRoutes.get("/:id" , getProductController);
 
 export default productsRouter;
 
