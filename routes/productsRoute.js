@@ -5,10 +5,9 @@ import { createProductController,
     getProductController, 
     updateProductController,
     updateProductController,
-    deleteProductController , 
     deleteProductController} from "../controllers/productController";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
-deleteProductController
+
 
 
 const productsRouter = express.Router();
