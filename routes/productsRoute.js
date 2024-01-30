@@ -15,7 +15,7 @@ const productsRouter = express.Router();
 userRoutes.post("/" , isLoggedIn , createProductController);
 userRoutes.get("/" , getProductsController);
 userRoutes.get("/:id" , getProductController);
-userRoutes.get("/:id" , isLoggedIn ,updateProductController);
+userRoutes.put("/:id" , isLoggedIn ,updateProductController);
 userRoutes.delete("/:id/delete" , isLoggedIn ,deleteProductController);
 
 export default productsRouter;
