@@ -8,9 +8,9 @@ const categoriesRouter = express.Router();
 
 categoriesRouter.post("/", isLoggedIn ,createCategoryController);
 categoriesRouter.get("/", getAllCategoriesController);
-categoriesRouter.post("/:id", getSingleCategoryController);
-categoriesRouter.post("/:id",deleteCategoryController);
-categoriesRouter.post("/:id" ,updateCategoryController);
+categoriesRouter.get("/:id", getSingleCategoryController);
+categoriesRouter.delete("/:id",deleteCategoryController);
+categoriesRouter.put("/:id" ,updateCategoryController);
 
 
 
