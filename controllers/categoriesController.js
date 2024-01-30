@@ -14,7 +14,7 @@ export const createCategoryController = asyncHandler(async (req,res) => {
     }
     //create
     const category = await Category.create({
-        name,
+        name: name.toLowerCase(),
         user: req.userAuthId,
     });
 
