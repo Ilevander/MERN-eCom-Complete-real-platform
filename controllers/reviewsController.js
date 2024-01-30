@@ -11,12 +11,20 @@ export const createReviewController = asyncHandler(async(req,res) => {
     //1. Find the Product 
     console.log(req.params);
     const { productID } = req.params;
-    const productFound = await Product.findById(productID);
+    const productFound = await Product.findById(productID).populate('reviews');
     console.log(productFound);
     if(!productFound){
         throw new Error('Product Not Found');
     }
     //check if user already reviewed 
+    const hasReviewed = productFound?.reviews?.find((review) => {
+        console.log(review);
+        return review?.user?.toString()  ===  req?.userAuthId
+    });
+    if(hasReviewed){
+        throw new Error("You have already reviewed this product");
+    }
+    console.log(hasReviewed);
     //create review:
     const review = await Review.create({
         message,
