@@ -35,23 +35,33 @@ export const createOrderController =  asyncHandler(async (req,res) => {
     });
     console.log(order);
     
-    //Push Order into user
-    user.orders.push(order?._id);
-    await user.save();
+    
 
     //Update the product qty
     const products = await Product.find({_id:{$in:orderItems}});
     console.log(products);
     orderItems?.map(async(order) => {
         const product = products?.find((product) => {
-            return products?._id === order?._id.toString();
+            return product?._id === order?._id.toString();
         });
         if(product){
             product.totalPrice += order.qty;
         }
         await  product.save();
     });
+
+    //Push Order into user
+    user.orders.push(order?._id);
+    await user.save();
+
     //make payment (stripe)
     //Payment Webhook
     //Update the user Order
+
+    res.json({
+        success: true,
+        message: "Order created",
+        order,
+        user,
+    })
 });
