@@ -5,12 +5,11 @@ import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
 import { getTokenFromHeader } from "../utils/getTokenFromHeader.js";
 import { verifyToken } from "../utils/verifyToken.js";
-
+import User from "../model/User.js";
 
 // @desc: Register user
 // @route: POST /api/v1/users/register
 // @access: Private/Admin
-
 export const registerUserController = asyncHandler(async (req, res) => {
     // res.json({
     //     msg: "User register controller",
@@ -39,11 +38,11 @@ export const registerUserController = asyncHandler(async (req, res) => {
     });
 });
 
+
+
 //@desc : Login user
 //@route POST /api/v1/users/login
 //@access Public
-
-
 export const loginUserController = asyncHandler(async (req,res) => {
     const {email,password} = req.body;
     //Find the user in db by email only
@@ -63,10 +62,10 @@ export const loginUserController = asyncHandler(async (req,res) => {
     
 })
 
+
 // @desc  GET user profile
 // @route GET /api/v1/users/profile
 // @access Private
-
 export const getUserProfileController = asyncHandler(async (req,res) => {
     //Take token from header
     const token = getTokenFromHeader(req);
@@ -79,4 +78,30 @@ export const getUserProfileController = asyncHandler(async (req,res) => {
     });
 });
 
-  
+// @desc  Update user shipping address
+// @route PUT /api/v1/update/shipping
+// @access Private
+export const updateShippingAddressController = asyncHandler(async(req,res) => {
+    const {firstName , lastName , address , city , postalCode , province , } = req.body;
+    const user = await User.findByIdAndUpdate(req.userAthId, {
+        shippingAddress: {
+            firstName,
+            lastName,
+            address,
+            city,
+            postalCode,
+            province,
+            phone,
+        },
+        hasShippingAddress: true,
+    },
+    {
+        new: true,
+    });
+    //Send response 
+    res.json({
+        status: "success",
+        message: "User shipping address updated successfully",
+        user,
+    });
+});
